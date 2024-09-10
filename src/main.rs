@@ -4,6 +4,8 @@
 use eframe::egui;
 
 pub mod world;
+pub mod visuals;
+pub mod utils;
 
 //TODO: put in a .env file
 const WITH_GUI: bool = true;
@@ -20,14 +22,9 @@ fn gui() -> eframe::Result<()> {
         ..Default::default()
     };
 
-    eframe::run_simple_native("Adventure game", options, move |ctx, _frame| {
-        egui::CentralPanel::default().show(ctx, |ui| {
-            ui.vertical_centered(|ui| {
-                ui.heading("Adventure game");
-                if ui.button("Start").clicked() {
-                    todo!();
-                }
-            })
-        });
-    })
+    eframe::run_native(
+        "Adventure game",
+        options,
+        Box::new(|_cc| Ok(Box::new(visuals::screen::gui::Gui::new()))),
+    )
 }
